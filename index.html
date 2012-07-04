@@ -31,7 +31,7 @@
 </head>
 <body>
 
-  <div class="row">
+  <div id="todoWrapper" class="row">
     <div class="eight columns centered">
       <div class="panel radius">
         <h3>Todos with Backbone and Foundation 3</h3>
@@ -44,34 +44,45 @@
               <a href="#" class="postfix button">Add</a>
             </div>
           </div>
+
           <div id="tabsWrapper" class="row">
+
             <div class="twelve columns">
               <dl class="tabs">
-                <dd class="active"><a href="#simple1">Simple Tab 1</a></dd>
-                <dd><a href="#simple2">Simple Tab 2</a></dd>
-                <dd><a href="#simple3">Simple Tab 3</a></dd>
+                <dd class="active"><a href="#simple1">My First List</a></dd>
               </dl>
 
               <ul class="tabs-content">
                 <li class="active" id="simple1Tab">
                   <div class="row">
-                    <div id="todoItems" class="twelve columns">
-                      <label for="checkbox1">
-                        <input type="checkbox" id="checkbox1" style="display: none;">
-                        <span class="custom checkbox"></span> Label for Checkbox
-                      </label>
-                      <label for="checkbox1">
-                        <input type="checkbox" id="checkbox1" style="display: none;">
-                        <span class="custom checkbox"></span> Label for Checkbox
-                      </label>
-                    </div>
+                    <ul class="twelve columns tasks">
+                      <li>
+                        <label for="checkbox1">
+                          <input type="checkbox" id="checkbox1" style="display: none;">
+                          <span class="custom checkbox"></span>
+                          <span class="taskName">Label for Checkbox</span>
+                        </label>
+                        <div class="remove">x</div>
+                      </li>
+                      <li>
+                        <label for="checkbox2">
+                          <input type="checkbox" id="checkbox2" style="display: none;">
+                          <span class="custom checkbox"></span>
+                          <span class="taskName">Label for Checkbox</span>
+                        </label>
+                        <div class="remove">x</div>
+                      </li>
+                      <li>
+                        Nothing to do...
+                      </li>
+                    </ul>
                   </div>
                 </li>
-                <li id="simple2Tab">This is simple tab 2's content. Now you see it!</li>
-                <li id="simple3Tab">This is simple tab 3's content. It's, you know...okay.</li>
               </ul>
+
             </div>
           </div>
+
         </form>
       </div>
     </div>

@@ -29,7 +29,7 @@ jQuery(document).ready(function ($) {
   });
 
   if (window.location.hash) {
-    activateTab($('a[href="' + window.location.hash + '"]'));
+    activateTab($('a[href="' + window.location.hash + '"]').parent());
     $.foundation.customForms.appendCustomMarkup();
   }
 

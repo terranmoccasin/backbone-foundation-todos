@@ -105,10 +105,14 @@ form.custom .custom.disabled { background-color: #ddd; }
 /* -----------------------------------------
    Todo Styles
 ----------------------------------------- */
+#todoWrapper { margin-top: 2%; }
 #tabsWrapper { margin-top: 20px; }
-#todoItems label { height: 40px; font-size: 18px; font-weight: 300;}
-ul.tabs-content li { background-color: #ffffff; border-left: 1px solid #E6E6E6; border-right: 1px solid #E6E6E6; border-bottom: 1px solid #E6E6E6; }
-
+ul.tabs-content { background-color: #ffffff; border-left: 1px solid #E6E6E6; border-right: 1px solid #E6E6E6; border-bottom: 1px solid #E6E6E6; }
+ul.tasks li { list-style: none; padding: 15px 0; margin: 0 20px; border-bottom: 1px solid #dddddd; overflow: auto; }
+ul.tasks li:last-child { border-bottom: none; }
+ul.tasks label { float: left; width: 100%; }
+ul.tasks .remove { display: none; float: right; }
+ul.tasks .taskName { margin-left: 10px; }
 
 /* -----------------------------------------
    Page Name 2
