@@ -22,6 +22,9 @@
   <![endif]-->
 
   <script src="javascripts/modernizr.foundation.js"></script>
+  <script src="javascripts/underscore-min.js"></script>
+  <script src="javascripts/backbone-min.js"></script>
+  <script src="javascripts/todos.js"></script>
 
   <!-- IE Fix for HTML5 Tags -->
   <!--[if lt IE 9]>
@@ -35,27 +38,29 @@
     <div class="eight columns centered">
       <div class="panel radius">
         <h3>Todos with Backbone and Foundation 3</h3>
-        <form class="custom">
-          <div class="row collapse">
-            <div class="ten mobile-three columns">
-              <input type="text" placeholder="Enter a Todo" />
-            </div>
-            <div class="two mobile-one columns">
-              <a href="#" class="postfix button">Add</a>
-            </div>
-          </div>
-
           <div id="tabsWrapper" class="row">
 
             <div class="twelve columns">
               <dl class="tabs">
                 <dd class="active"><a href="#simple1">My First List</a></dd>
+                <dd><a href="#simple2">My Second List</a></dd>
               </dl>
 
-              <ul class="tabs-content">
-                <li class="active" id="simple1Tab">
+            <ul class="tabs-content">
+              <li class="active" id="simple1Tab">
+                <form class="custom">
                   <div class="row">
                     <ul class="twelve columns tasks">
+                      <li class="addTask">
+                        <div class="row collapse">
+                          <div class="ten mobile-three columns">
+                            <input type="text" placeholder="Enter a Todo" />
+                          </div>
+                          <div class="two mobile-one columns">
+                            <a href="#" class="postfix button">Add</a>
+                          </div>
+                        </div>
+                      </li>
                       <li>
                         <label for="checkbox1">
                           <input type="checkbox" id="checkbox1" style="display: none;">
@@ -72,18 +77,53 @@
                         </label>
                         <div class="remove">x</div>
                       </li>
-                      <li>
-                        Nothing to do...
+                      <li class="status">
+                        0 tasks completed
                       </li>
                     </ul>
                   </div>
-                </li>
-              </ul>
-
-            </div>
+                </form>
+              </li>
+              <li id="simple2Tab">
+                <form class="custom">
+                  <div class="row">
+                    <ul class="twelve columns tasks">
+                      <li class="addTask">
+                        <div class="row collapse">
+                          <div class="ten mobile-three columns">
+                            <input type="text" placeholder="Enter a Todo" />
+                          </div>
+                          <div class="two mobile-one columns">
+                            <a href="#" class="postfix button">Add</a>
+                          </div>
+                        </div>
+                      </li>
+                      <li>
+                        <label for="checkbox3">
+                          <input type="checkbox" id="checkbox3" style="display: none;">
+                          <span class="custom checkbox"></span>
+                          <span class="taskName">Sistar 19</span>
+                        </label>
+                        <div class="remove">x</div>
+                      </li>
+                      <li>
+                        <label for="checkbox4">
+                          <input type="checkbox" id="checkbox4" style="display: none;">
+                          <span class="custom checkbox"></span>
+                          <span class="taskName">K-Pop rulez</span>
+                        </label>
+                        <div class="remove">x</div>
+                      </li>
+                      <li class="status">
+                        0 tasks completed
+                      </li>
+                    </ul>
+                  </div>
+                </form>
+              <li>
+            </ul>
           </div>
-
-        </form>
+        </div>
       </div>
     </div>
   </div>
@@ -99,3 +139,4 @@
 
 </body>
 </html>
+

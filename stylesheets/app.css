@@ -108,11 +108,13 @@ form.custom .custom.disabled { background-color: #ddd; }
 #todoWrapper { margin-top: 2%; }
 #tabsWrapper { margin-top: 20px; }
 ul.tabs-content { background-color: #ffffff; border-left: 1px solid #E6E6E6; border-right: 1px solid #E6E6E6; border-bottom: 1px solid #E6E6E6; }
-ul.tasks li { list-style: none; padding: 15px 0; margin: 0 20px; border-bottom: 1px solid #dddddd; overflow: auto; }
-ul.tasks li:last-child { border-bottom: none; }
-ul.tasks label { float: left; width: 100%; }
-ul.tasks .remove { display: none; float: right; }
-ul.tasks .taskName { margin-left: 10px; }
+.tasks li { list-style: none; padding: 15px 0; margin: 0 20px; border-bottom: 1px solid #dddddd; overflow: auto; }
+.tasks li:last-child { border-bottom: none; }
+.tasks li.status { width: 100%; }
+.tasks label { float: left; width: 100%; }
+.tasks .remove { display: none; float: right; }
+.tasks .taskName { margin-left: 10px; }
+.tasks li.addTask { border: none; padding-bottom: 5px; }
 
 /* -----------------------------------------
    Page Name 2
