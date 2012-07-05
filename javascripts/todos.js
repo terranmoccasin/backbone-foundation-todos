@@ -54,7 +54,7 @@ TODOS.App = function () {
 	var TaskView = Backbone.View.extend({
 		tagName: "li",
 		className: "task",
-		elTemplate: $("#todo-task-tpl").html(),
+		elTemplate: $("#task-tpl").html(),
 		events: {
 			"mouseover": "mouseover",
 			"mouseleave": "mouseleave",
@@ -96,12 +96,24 @@ TODOS.App = function () {
 
 	var TaskListView = Backbone.View.extend({
 		tagName: "li",
-		elTemplate: $("#todo-tasks-tpl").html(),
+		elTemplate: "#task-list-tpl",
+		emptyTemplate: "#task-list-empty-tpl",
+		statusTemplate: "#task-list-status-tpl",
 		events: {
 			"click .button": "addTask",
 			"keypress input[type='text']": "keypress"
 		},
 		initialize: function () {
+			var $elTemplate = $(this.elTemplate),
+				$emptyTemplate = $(this.emptyTemplate),
+				$statusTemplate = $(this.statusTemplate);
+			this.elTemplate = _.template($elTemplate.html());
+			this.emptyTemplate = _.template($emptyTemplate.html());
+			this.statusTemplate = _.template($statusTemplate.html());
+			$elTemplate.remove();
+			$emptyTemplate.remove();
+			$statusTemplate.remove();
+
 			_.bindAll(this, "createTaskView", "renderTaskView", "removeTask", "taskChange");
 			this.$el.attr("id", this.model.cid + "Tab");
 			this.taskViews = {};
@@ -112,8 +124,11 @@ TODOS.App = function () {
 			this.collection.on("change:completed", this.taskChange);
 		},
 		render: function () {
-			this.$el.append(_.template(this.elTemplate));
+			this.$el.append(this.elTemplate);
 			this.collection.each(this.renderTaskView);
+			if (this.isEmpty()) {
+				this.$(".tasks").append(this.emptyTemplate);
+			}
 			return this;
 		},
 		createTaskView: function (task) {
@@ -127,6 +142,10 @@ TODOS.App = function () {
 			var $input = this.$("input");
 			var name = $input.val();
 			if (name) {
+				if (this.isEmpty()) {
+					this.$(".empty").remove();
+					this.$(".tasks").append(this.statusTemplate);
+				}
 				$input.val("");
 				var task = new Task({name: name});
 				this.collection.add(task);
@@ -137,6 +156,10 @@ TODOS.App = function () {
 			var taskView = this.taskViews[task.cid];
 			taskView.unbind();
 			taskView.remove();
+			if (this.isEmpty()) {
+				this.$(".status").remove();
+				this.$(".tasks").append(this.emptyTemplate);
+			}
 		},
 		keypress: function (e) {
 	        if ((e.which && e.which == 13) || (e.keyCode && e.keyCode == 13)) {
@@ -145,6 +168,9 @@ TODOS.App = function () {
 		},
 		taskChange: function (task) {
 			console.log(task);
+		},
+		isEmpty: function () {
+			return this.collection.length == 0;
 		}
 	});
 

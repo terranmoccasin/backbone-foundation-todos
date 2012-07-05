@@ -60,7 +60,7 @@
   <script src="javascripts/todos.js"></script>
 
 
-  <script type="text/html" id="todo-task-tpl">
+  <script type="text/html" id="task-tpl">
   <label for="<%= cid %>">
     <input type="checkbox" id="<%= cid %>" style="display: none;">
     <span class="custom checkbox"></span>
@@ -69,7 +69,7 @@
   <div class="close">×</div>
   </script>
 
-  <script type="text/html" id="todo-tasks-tpl">
+  <script type="text/html" id="task-list-tpl">
   <form class="custom">
     <div class="row">
       <ul class="twelve columns tasks">
@@ -83,14 +83,17 @@
             </div>
           </div>
         </li>
-        <li class="empty">Nothing to do...</li>
       </ul>
     </div>
   </form>
   </script>
 
-  <script type="text/html" id="todo-tasks-status">
-  <li class="status">0 tasks completed</li>
+  <script type="text/html" id="task-list-empty-tpl">
+  <li class="empty">Nothing to do...</li>
+  </script>
+
+  <script type="text/html" id="task-list-status-tpl">
+  <li class="status"><span class="count">0</span> <span class="grammar">tasks</span> left</li>
   </script>
 
   <script type="text/html" id="todo-tab-tpl">
