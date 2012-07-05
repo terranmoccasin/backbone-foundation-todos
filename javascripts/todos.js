@@ -72,7 +72,8 @@ TODOS.App = function () {
 		tagName: "li",
 		elTemplate: $("#todo-tasks-tpl").html(),
 		events: {
-			"click .button": "addTask"
+			"click .button": "addTask",
+			"keypress input[type='text']": "keypress"
 		},
 		initialize: function () {
 			_.bindAll(this, "createTaskView", "renderTaskView");
@@ -104,6 +105,11 @@ TODOS.App = function () {
 				this.collection.add(task);
 			}
 			return false;
+		},
+		keypress: function (e) {
+	        if ((e.which && e.which == 13) || (e.keyCode && e.keyCode == 13)) {
+	            this.addTask();
+	        }
 		}
 	});
 
