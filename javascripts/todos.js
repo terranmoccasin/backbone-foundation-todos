@@ -55,12 +55,27 @@ TODOS.App = function () {
 		tagName: "li",
 		className: "task",
 		elTemplate: $("#todo-task-tpl").html(),
+		events: {
+			"mouseover": "mouseover",
+			"mouseleave": "mouseleave",
+			"click .close": "close"
+		},
 		render: function () {
 			this.$el.append(_.template(this.elTemplate, {
 				cid: this.model.cid,
 				name: this.model.get("name")
 			}));
 			return this;
+		},
+		mouseover: function (e) {
+			this.$(".close").show();
+		},
+		mouseleave: function (e) {
+			this.$(".close").hide();
+		},
+		close: function (e) {
+			this.model.collection.remove(this.model);
+			return false;
 		}
 	});
 
@@ -76,12 +91,13 @@ TODOS.App = function () {
 			"keypress input[type='text']": "keypress"
 		},
 		initialize: function () {
-			_.bindAll(this, "createTaskView", "renderTaskView");
+			_.bindAll(this, "createTaskView", "renderTaskView", "removeTask");
 			this.$el.attr("id", this.model.cid + "Tab");
 			this.taskViews = {};
 			this.collection.each(this.createTaskView);
 			this.collection.on("add", this.createTaskView);
 			this.collection.on("add", this.renderTaskView);
+			this.collection.on("remove", this.removeTask);
 		},
 		render: function () {
 			this.$el.append(_.template(this.elTemplate));
@@ -100,11 +116,15 @@ TODOS.App = function () {
 			var name = $input.val();
 			if (name) {
 				$input.val("");
-
 				var task = new Task({name: name});
 				this.collection.add(task);
 			}
 			return false;
+		},
+		removeTask: function (task) {
+			var taskView = this.taskViews[task.cid];
+			taskView.unbind();
+			taskView.remove();
 		},
 		keypress: function (e) {
 	        if ((e.which && e.which == 13) || (e.keyCode && e.keyCode == 13)) {
@@ -182,8 +202,7 @@ TODOS.App = function () {
 
 $(function() {
 	var todos = new TODOS.App();
-	todos.addTodo("test");
-	todos.addTodo("bob");
+	todos.addTodo("Todo List");
 
 	$('dl.tabs dd a').on('click.fndtn', function (event) {
 		TODOS.util.activateTab($(this).parent('dd'));
