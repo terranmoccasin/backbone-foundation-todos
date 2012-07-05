@@ -19,6 +19,8 @@ jQuery(document).ready(function ($) {
     $activeTab.removeClass('active');
     $tab.addClass('active');
 
+    var id = $tab.children("a").attr("href");
+
     //Show Tab Content
     $(contentLocation).closest('.tabs-content').children('li').hide();
     $(contentLocation).css('display', 'block');
@@ -32,14 +34,6 @@ jQuery(document).ready(function ($) {
     activateTab($('a[href="' + window.location.hash + '"]').parent());
     $.foundation.customForms.appendCustomMarkup();
   }
-
-  /* ALERT BOXES ------------ */
-  $(".alert-box").delegate("a.close", "click", function(event) {
-    event.preventDefault();
-    $(this).closest(".alert-box").fadeOut(function(event){
-      $(this).remove();
-    });
-  });
 
   /* PLACEHOLDER FOR FORMS ------------- */
   /* Remove this and jquery.placeholder.min.js if you don't need :) */
