@@ -58,6 +58,7 @@ TODOS.App = function () {
 		events: {
 			"mouseover": "mouseover",
 			"mouseleave": "mouseleave",
+			"click": "toggleCheck",
 			"click .close": "close"
 		},
 		render: function () {
@@ -76,6 +77,16 @@ TODOS.App = function () {
 		close: function (e) {
 			this.model.collection.remove(this.model);
 			return false;
+		},
+		toggleCheck: function (e) {
+			var completed = this.model.get("completed");
+			if (completed) {
+				this.model.set("completed", false);
+				this.$(".taskName").removeClass("completed");
+			} else {
+				this.model.set("completed", true);
+				this.$(".taskName").addClass("completed");
+			}
 		}
 	});
 
@@ -91,13 +102,14 @@ TODOS.App = function () {
 			"keypress input[type='text']": "keypress"
 		},
 		initialize: function () {
-			_.bindAll(this, "createTaskView", "renderTaskView", "removeTask");
+			_.bindAll(this, "createTaskView", "renderTaskView", "removeTask", "taskChange");
 			this.$el.attr("id", this.model.cid + "Tab");
 			this.taskViews = {};
 			this.collection.each(this.createTaskView);
 			this.collection.on("add", this.createTaskView);
 			this.collection.on("add", this.renderTaskView);
 			this.collection.on("remove", this.removeTask);
+			this.collection.on("change:completed", this.taskChange);
 		},
 		render: function () {
 			this.$el.append(_.template(this.elTemplate));
@@ -130,6 +142,9 @@ TODOS.App = function () {
 	        if ((e.which && e.which == 13) || (e.keyCode && e.keyCode == 13)) {
 	            this.addTask();
 	        }
+		},
+		taskChange: function (task) {
+			console.log(task);
 		}
 	});
 
