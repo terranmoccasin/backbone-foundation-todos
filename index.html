@@ -31,48 +31,19 @@
 </head>
 <body>
 
-  <div class="row">
+  <div id="todoWrapper" class="row">
     <div class="eight columns centered">
       <div class="panel radius">
         <h3>Todos with Backbone and Foundation 3</h3>
-        <form class="custom">
-          <div class="row collapse">
-            <div class="ten mobile-three columns">
-              <input type="text" placeholder="Enter a Todo" />
-            </div>
-            <div class="two mobile-one columns">
-              <a href="#" class="postfix button">Add</a>
-            </div>
-          </div>
-          <div id="tabsWrapper" class="row">
-            <div class="twelve columns">
-              <dl class="tabs">
-                <dd class="active"><a href="#simple1">Simple Tab 1</a></dd>
-                <dd><a href="#simple2">Simple Tab 2</a></dd>
-                <dd><a href="#simple3">Simple Tab 3</a></dd>
-              </dl>
+        <div id="tabsWrapper" class="row">
 
-              <ul class="tabs-content">
-                <li class="active" id="simple1Tab">
-                  <div class="row">
-                    <div id="todoItems" class="twelve columns">
-                      <label for="checkbox1">
-                        <input type="checkbox" id="checkbox1" style="display: none;">
-                        <span class="custom checkbox"></span> Label for Checkbox
-                      </label>
-                      <label for="checkbox1">
-                        <input type="checkbox" id="checkbox1" style="display: none;">
-                        <span class="custom checkbox"></span> Label for Checkbox
-                      </label>
-                    </div>
-                  </div>
-                </li>
-                <li id="simple2Tab">This is simple tab 2's content. Now you see it!</li>
-                <li id="simple3Tab">This is simple tab 3's content. It's, you know...okay.</li>
-              </ul>
-            </div>
+          <div class="twelve columns">
+            <dl class="tabs"></dl>
+
+            <ul class="tabs-content"></ul>
+
           </div>
-        </form>
+        </div>
       </div>
     </div>
   </div>
@@ -84,7 +55,51 @@
   <script src="javascripts/jquery.customforms.js"></script>
   <script src="javascripts/jquery.placeholder.min.js"></script>
   <script src="javascripts/jquery.tooltips.js"></script>
-  <script src="javascripts/app.js"></script>
+  <script src="javascripts/underscore-min.js"></script>
+  <script src="javascripts/backbone-min.js"></script>
+  <script src="javascripts/todos.js"></script>
+
+
+  <script type="text/html" id="task-tpl">
+  <label for="<%= cid %>">
+    <input type="checkbox" id="<%= cid %>" style="display: none;">
+    <span class="custom checkbox"></span>
+    <span class="taskName"><%= name %></span>
+  </label>
+  <div class="close">×</div>
+  </script>
+
+  <script type="text/html" id="task-list-tpl">
+  <form class="custom">
+    <div class="row">
+      <ul class="twelve columns tasks">
+        <li class="addTask">
+          <div class="row collapse">
+            <div class="ten mobile-three columns">
+              <input type="text" placeholder="What needs to be done?" />
+            </div>
+            <div class="two mobile-one columns">
+              <a href="#" class="postfix button">Add</a>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </form>
+  </script>
+
+  <script type="text/html" id="task-list-empty-tpl">
+  <li class="empty">Nothing to do...</li>
+  </script>
+
+  <script type="text/html" id="task-list-status-tpl">
+  <li class="status"><span class="count">0</span> <span class="grammar">task</span> left</li>
+  </script>
+
+  <script type="text/html" id="todo-tab-tpl">
+  <a href="#<%= cid %>"><%= name %></a>
+  </script>
 
 </body>
 </html>
+
