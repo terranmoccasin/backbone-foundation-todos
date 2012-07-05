@@ -149,6 +149,7 @@ TODOS.App = function () {
 				$input.val("");
 				var task = new Task({name: name});
 				this.collection.add(task);
+				this.changeStatus("plus");
 			}
 			return false;
 		},
@@ -160,6 +161,7 @@ TODOS.App = function () {
 				this.$(".status").remove();
 				this.$(".tasks").append(this.emptyTemplate);
 			}
+			this.changeStatus("minus");
 		},
 		keypress: function (e) {
 	        if ((e.which && e.which == 13) || (e.keyCode && e.keyCode == 13)) {
@@ -167,10 +169,33 @@ TODOS.App = function () {
 	        }
 		},
 		taskChange: function (task) {
-			console.log(task);
+			if (task.get("completed")) {
+				this.changeStatus("minus");
+			} else {
+				this.changeStatus("plus");
+			}
 		},
 		isEmpty: function () {
 			return this.collection.length == 0;
+		},
+		changeStatus: function (action) {
+			var $status = this.$(".status"),
+				$count = $status.find(".count"),
+				count = parseInt($count.html()),
+				$grammar = $status.find(".grammar");
+			if (action == "plus") {
+				count += 1;
+				$count.empty().html(count);
+			} else if (action == "minus") {
+				count -= 1;
+
+			}
+			if (count != 1 && $grammar.html() != "tasks") {
+				$grammar.empty().html("tasks");
+			} else if (count == 1 && $grammar.html() != "task"){
+				$grammar.empty().html("task");
+			}
+			$count.empty().html(count);
 		}
 	});
 
