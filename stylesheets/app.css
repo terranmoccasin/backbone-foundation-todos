@@ -105,10 +105,19 @@ form.custom .custom.disabled { background-color: #ddd; }
 /* -----------------------------------------
    Todo Styles
 ----------------------------------------- */
+#todoWrapper { margin-top: 2%; }
 #tabsWrapper { margin-top: 20px; }
-#todoItems label { height: 40px; font-size: 18px; font-weight: 300;}
-ul.tabs-content li { background-color: #ffffff; border-left: 1px solid #E6E6E6; border-right: 1px solid #E6E6E6; border-bottom: 1px solid #E6E6E6; }
-
+ul.tabs-content { background-color: #ffffff; border-left: 1px solid #E6E6E6; border-right: 1px solid #E6E6E6; border-bottom: 1px solid #E6E6E6; }
+.tasks li { list-style: none; padding: 15px 0; margin: 0 20px; border-bottom: 1px solid #dddddd; overflow: auto; }
+.tasks li:last-child { border-bottom: none; }
+.tasks li.status { width: 100%; }
+.tasks li.task { padding-top: 0; padding-bottom: 0; }
+.tasks li.addTask { border: none; padding-top: 20px; padding-bottom: 5px; }
+.tasks label { float: left; width: 95%; padding: 15px 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.tasks .close { cursor: pointer; width: 25px; text-align: center; font-size: 20px; display: none; position: absolute; right: 25px; margin-top: 10px; color: #555555; text-shadow: 0 1px rgba(255, 255, 255, 0.3); font-weight: bold; opacity: 0.4; }
+.tasks .close:hover { color: #333333; opacity: 0.8; }
+.tasks .taskName { margin-left: 10px; }
+.tasks .completed { text-decoration: line-through; }
 
 /* -----------------------------------------
    Page Name 2
