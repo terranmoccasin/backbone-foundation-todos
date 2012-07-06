@@ -83,10 +83,13 @@ TODOS.App = function () {
 			if (completed) {
 				this.model.set("completed", false);
 				this.$(".taskName").removeClass("completed");
+				this.$(".checkbox").removeClass("checked");
 			} else {
 				this.model.set("completed", true);
 				this.$(".taskName").addClass("completed");
+				this.$(".checkbox").addClass("checked");
 			}
+			return false;
 		}
 	});
 
