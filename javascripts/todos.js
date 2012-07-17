@@ -212,8 +212,8 @@ TODOS.App = function () {
 			return incomplete.length;
 		},
 		checkAll: function (e) {
-			var $checkbox = $(e.target).find(".checkbox"),
-				priorStatus = $checkbox.hasClass("checked");
+			var $checkbox = $(e.currentTarget).find(".checkbox"),
+				priorStatus = ($checkbox.hasClass("checked")) ? true : false;
 			this.collection.each(function(task) {
 				task.set("completed", !priorStatus); 
 			});
@@ -229,6 +229,7 @@ TODOS.App = function () {
 			} else {
 				$checkbox.removeClass("checked");
 			}
+			return false;
 		},
 		toggleRemoveSelected: function (e) {
 			var $removeSelected = this.$(".remove-selected");
@@ -246,6 +247,7 @@ TODOS.App = function () {
 				return task.get("completed") == true;
 			});
 			this.collection.remove(completed);
+			return false;
 		}
 	});
 
