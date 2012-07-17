@@ -58,8 +58,12 @@ TODOS.App = function () {
 		events: {
 			"mouseover": "mouseover",
 			"mouseleave": "mouseleave",
-			"click": "toggleCheck",
+			"click": "toggleStatus",
 			"click .close": "close"
+		},
+		initialize: function () {
+			_.bindAll(this, "setCheck", "toggleStatus");
+			this.model.on("change:completed", this.setCheck);
 		},
 		render: function () {
 			this.$el.append(_.template(this.elTemplate, {
@@ -78,16 +82,19 @@ TODOS.App = function () {
 			this.model.collection.remove(this.model);
 			return false;
 		},
-		toggleCheck: function (e) {
+		toggleStatus: function (e) {
+			var completed = this.model.get("completed");
+			this.model.set("completed", !completed);
+			return false;
+		},
+		setCheck: function (e) {
 			var completed = this.model.get("completed");
 			if (completed) {
-				this.model.set("completed", false);
-				this.$(".taskName").removeClass("completed");
-				this.$(".checkbox").removeClass("checked");
-			} else {
-				this.model.set("completed", true);
 				this.$(".taskName").addClass("completed");
 				this.$(".checkbox").addClass("checked");
+			} else {
+				this.$(".taskName").removeClass("completed");
+				this.$(".checkbox").removeClass("checked");
 			}
 			return false;
 		}
@@ -102,29 +109,37 @@ TODOS.App = function () {
 		elTemplate: "#task-list-tpl",
 		emptyTemplate: "#task-list-empty-tpl",
 		statusTemplate: "#task-list-status-tpl",
+		checkAllTemplate: "#task-list-checkAll-tpl",
 		events: {
 			"click .button": "addTask",
+			"click .checkAll": "checkAll",
+			"click .remove-selected": "removeSelected",
 			"keypress input[type='text']": "keypress"
 		},
 		initialize: function () {
 			var $elTemplate = $(this.elTemplate),
 				$emptyTemplate = $(this.emptyTemplate),
-				$statusTemplate = $(this.statusTemplate);
+				$statusTemplate = $(this.statusTemplate),
+				$checkAllTemplate = $(this.checkAllTemplate);
 			this.elTemplate = _.template($elTemplate.html());
 			this.emptyTemplate = _.template($emptyTemplate.html());
 			this.statusTemplate = _.template($statusTemplate.html());
-			$elTemplate.remove();
-			$emptyTemplate.remove();
-			$statusTemplate.remove();
+			this.checkAllTemplate = _.template($checkAllTemplate.html());
 
-			_.bindAll(this, "createTaskView", "renderTaskView", "removeTask", "updateStatus");
+			_.bindAll(this, "createTaskView", "renderTaskView", "removeTask");
+			_.bindAll(this, "updateStatus", "checkAll", "toggleCheckAll", "toggleRemoveSelected");
 			this.$el.attr("id", this.model.cid + "Tab");
 			this.taskViews = {};
 			this.collection.each(this.createTaskView);
 			this.collection.on("add", this.createTaskView);
 			this.collection.on("add", this.renderTaskView);
+			this.collection.on("add", this.toggleCheckAll);
 			this.collection.on("remove", this.removeTask);
+			this.collection.on("remove", this.toggleCheckAll);
+			this.collection.on("remove", this.toggleRemoveSelected);
 			this.collection.on("change:completed", this.updateStatus);
+			this.collection.on("change:completed", this.toggleCheckAll);
+			this.collection.on("change:completed", this.toggleRemoveSelected);
 		},
 		render: function () {
 			this.$el.append(this.elTemplate);
@@ -147,6 +162,7 @@ TODOS.App = function () {
 			if (name) {
 				if (this.isEmpty()) {
 					this.$(".empty").remove();
+					this.$(".tasks").append(this.checkAllTemplate);
 					this.$(".tasks").append(this.statusTemplate);
 				}
 				$input.val("");
@@ -154,6 +170,7 @@ TODOS.App = function () {
 				this.collection.add(task);
 				this.updateStatus();
 			}
+			$input.focus();
 			return false;
 		},
 		removeTask: function (task) {
@@ -162,6 +179,7 @@ TODOS.App = function () {
 			taskView.remove();
 			if (this.isEmpty()) {
 				this.$(".status").remove();
+				this.$(".checkAll").remove();
 				this.$(".tasks").append(this.emptyTemplate);
 			}
 			this.updateStatus();
@@ -192,6 +210,42 @@ TODOS.App = function () {
 				return !task.get("completed");
 			});
 			return incomplete.length;
+		},
+		checkAll: function (e) {
+			var $checkbox = $(e.target).find(".checkbox"),
+				priorStatus = $checkbox.hasClass("checked");
+			this.collection.each(function(task) {
+				task.set("completed", !priorStatus); 
+			});
+			return false;
+		},
+		toggleCheckAll: function (e) {
+			var $checkbox = this.$(".checkAll").find(".checkbox");
+			var allTasksCompleted = this.collection.all(function(task) {
+				return task.get("completed") == true;
+			});
+			if (allTasksCompleted) {
+				$checkbox.addClass("checked");
+			} else {
+				$checkbox.removeClass("checked");
+			}
+		},
+		toggleRemoveSelected: function (e) {
+			var $removeSelected = this.$(".remove-selected");
+			var somethingIsChecked = this.collection.find(function(task) {
+				return task.get("completed") == true;
+			});
+			if (somethingIsChecked) {
+				$removeSelected.show();
+			} else {
+				$removeSelected.hide();
+			}
+		},
+		removeSelected: function (e) {
+			var completed = this.collection.filter(function(task) {
+				return task.get("completed") == true;
+			});
+			this.collection.remove(completed);
 		}
 	});
 

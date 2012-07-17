@@ -82,6 +82,7 @@
               <a href="#" class="postfix button">Add</a>
             </div>
           </div>
+          <div class="row"></div>
         </li>
       </ul>
     </div>
@@ -93,11 +94,25 @@
   </script>
 
   <script type="text/html" id="task-list-status-tpl">
-  <li class="status"><span class="count">0</span> <span class="grammar">task</span> left</li>
+  <li class="status">
+    <span class="count">0</span> 
+    <span class="grammar">task</span> left
+    <a href="#" class="remove-selected">Remove Selected</a>
+  </li>
   </script>
 
   <script type="text/html" id="todo-tab-tpl">
   <a href="#<%= cid %>"><%= name %></a>
+  </script>
+
+  <script type="text/html" id="task-list-checkAll-tpl">
+  <li class="checkAll">
+    <label for="checkAllbox">
+      <input type="checkbox" id="checkAllbox" style="display: none;">
+      <span class="custom checkbox"></span>
+      <span class="taskName checkAllLabel">Check All</span>
+    </label>
+  </li>
   </script>
 
 </body>

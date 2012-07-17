@@ -118,6 +118,9 @@ ul.tabs-content { background-color: #ffffff; border-left: 1px solid #E6E6E6; bor
 .tasks .close:hover { color: #333333; opacity: 0.8; }
 .tasks .taskName { margin-left: 10px; }
 .tasks .completed { text-decoration: line-through; }
+.tasks .checkAll { padding-top: 0; padding-bottom: 0; }
+.tasks .checkAllLabel { font-weight: bold; }
+.status .remove-selected { display: none; position: absolute; right: 25px;}
 
 /* -----------------------------------------
    Page Name 2
